@@ -6,7 +6,7 @@ function draw() {
   const squares = document.querySelectorAll(".block");
   squares.forEach((square) => {
     square.addEventListener("mouseover", () => {
-      square.style.backgroundColor = "#d9a441";
+      square.style.backgroundColor = getRandomColor();
     });
   });
 }
@@ -38,3 +38,10 @@ refreshButton.addEventListener("click", (refresh) => {
     createGrid(size, size);
     draw();
 });
+
+function getRandomColor () {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return rgb = `rgb(${r}, ${g}, ${b})`;
+}
