@@ -17,8 +17,6 @@ body {
   display: flex;
   justify-content: center;
   background-color:#ffffff;
-  width: 100vw;
-  height: 100vh;
   flex-wrap: wrap;
   width: min(90vmin, 760px);
   height: min(90vmin, 760px);
