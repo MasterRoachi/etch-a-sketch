@@ -4,9 +4,23 @@ let size = 0;
 
 function draw() {
   const squares = document.querySelectorAll(".block");
+
   squares.forEach((square) => {
+    square.dataset.opacity = 0;
+
     square.addEventListener("mouseover", () => {
-      square.style.backgroundColor = getRandomColor();
+      let opacity = Number(square.dataset.opacity);
+
+      if (opacity < 1) {
+        opacity += 0.1;
+        square.dataset.opacity = opacity;
+      }
+
+      if (!square.dataset.color) {
+        square.dataset.color = getRandomColor();
+      }
+      
+      square.style.backgroundColor = `rgba(${square.dataset.color}, ${opacity})`;
     });
   });
 }
@@ -35,13 +49,13 @@ refreshButton.addEventListener("click", (refresh) => {
   while (size > 100) {
     size = Number(prompt("That's too much!"));
   }
-    createGrid(size, size);
-    draw();
+  createGrid(size, size);
+  draw();
 });
 
-function getRandomColor () {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    return rgb = `rgb(${r}, ${g}, ${b})`;
+function getRandomColor(opacity) {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  return `${r}, ${g}, ${b}`
 }
