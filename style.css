@@ -16,17 +16,14 @@ body {
   border: 2px solid #d9a441;
   display: flex;
   justify-content: center;
-  background-color:#1f2933;
+  background-color:#ffffff;
   width: 100vw;
   height: 100vh;
   flex-wrap: wrap;
-  max-width: 960px;
-  max-height: 780px;
+  width: min(90vmin, 760px);
+  height: min(90vmin, 760px);
 }
 
-.block {
-  display: flex;
-}
 
 .button-container {
   display: flex;

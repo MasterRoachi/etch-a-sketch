@@ -1,7 +1,5 @@
 const container = document.querySelector(".container");
 
-let size = 0;
-
 function draw() {
   const squares = document.querySelectorAll(".block");
 
@@ -12,15 +10,10 @@ function draw() {
       let opacity = Number(square.dataset.opacity);
 
       if (opacity < 1) {
-        opacity += 0.1;
+        opacity = Math.min(1, opacity + 0.1);
         square.dataset.opacity = opacity;
       }
-
-      if (!square.dataset.color) {
-        square.dataset.color = getRandomColor();
-      }
-      
-      square.style.backgroundColor = `rgba(${square.dataset.color}, ${opacity})`;
+      square.style.backgroundColor = `rgba( ${getRandomColor()}, ${opacity})`;
     });
   });
 }
@@ -41,21 +34,20 @@ function createGrid(gridHeight, gridWidth) {
 createGrid(16, 16);
 
 const refreshButton = document.querySelector("#refresh");
-refreshButton.addEventListener("click", (refresh) => {
+refreshButton.addEventListener("click", () => {
   document.querySelectorAll(".block").forEach((gridBlock) => {
     gridBlock.remove();
   });
   let size = Number(prompt("How many squares per side?"));
-  while (size > 100) {
-    size = Number(prompt("That's too much!"));
+  while (!Number.isInteger(size) || size < 1 || size > 100) {
+    size = Number(prompt("Please enter a whole number between 1 and 100."));
   }
   createGrid(size, size);
-  draw();
 });
 
-function getRandomColor(opacity) {
+function getRandomColor() {
   const r = Math.floor(Math.random() * 256);
   const g = Math.floor(Math.random() * 256);
   const b = Math.floor(Math.random() * 256);
-  return `${r}, ${g}, ${b}`
+  return `${r}, ${g}, ${b}`;
 }
