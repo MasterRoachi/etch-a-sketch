@@ -22,6 +22,17 @@ createGrid(DEFAULT_GRID_SIZE, DEFAULT_GRID_SIZE);
 
 /* Events */
 
+container.addEventListener("pointerdown", (event) => {
+  isDrawing = true;
+  drawFromPointer(event);
+});
+
+container.addEventListener("pointermove", (event) => {
+  if (isDrawing) {
+    drawFromPointer(event);
+  }
+});
+
 document.addEventListener("pointerup", () => {
   isDrawing = false;
 });
@@ -101,6 +112,14 @@ function drawSquare(square) {
   square.style.backgroundColor = `rgba(${color}, ${opacity})`;
 }
 
+function drawFromPointer(event) {
+  const square = document.elementFromPoint(event.clientX, event.clientY);
+
+  if (square && square.classList.contains("block")) {
+    drawSquare(square);
+  }
+}
+
 /* Grid Functions */
 
 function createGrid(gridHeight, gridWidth) {
@@ -117,17 +136,6 @@ function createGrid(gridHeight, gridWidth) {
     */
 
     gridBlock.dataset.opacity = 0;
-
-    gridBlock.addEventListener("pointerdown", () => {
-      isDrawing = true;
-      drawSquare(gridBlock);
-    });
-
-    gridBlock.addEventListener("pointerenter", () => {
-      if (isDrawing) {
-        drawSquare(gridBlock);
-      }
-    });
 
     container.appendChild(gridBlock);
   }
