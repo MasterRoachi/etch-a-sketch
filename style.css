@@ -25,7 +25,8 @@ h1 {
 }
 
 .container {
-  border: 2px solid #d9a441;
+  border: 2px solid #1f2933;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   background-color:#1f2933;
@@ -40,11 +41,12 @@ h1 {
   background-color: #d9a441;
   justify-content: center;
   padding-bottom: 15px;
-  gap: 15px;
+  gap: 20px;
+  width: min(90vmin, 760px);
 
 }
 
-#refresh {
+button {
   background-color: #1f2933;
   font-size: 20px;
   width: 250px;
