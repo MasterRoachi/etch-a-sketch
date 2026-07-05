@@ -1,44 +1,74 @@
+/* DOM Elements */
+
 const container = document.querySelector(".container");
 const refreshButton = document.querySelector("#refresh");
 const rainbowButton = document.querySelector("#rainbow");
 const opacityButton = document.querySelector("#opacity");
 
+/* State */
+
 let rainbowEffect = false;
 let opacityEffect = false;
 
+/* Constants */
+
+const DEFAULT_GRID_SIZE = 16;
+const DEFAULT_COLOUR = "217, 164, 65";
+
 /* Initial Grid */
 
-createGrid(16, 16);
+createGrid(DEFAULT_GRID_SIZE, DEFAULT_GRID_SIZE);
 
 /* Events */
-
-/* Refresh Button clears screen and gets new grid dimensions*/
 
 refreshButton.addEventListener("click", () => {
   clearGrid();
   getGridSize();
 });
 
-/* Rainbow Button turns on the rgb Rainbow Effect */
-
 rainbowButton.addEventListener("click", () => {
   rainbowEffect = !rainbowEffect;
-});
 
-/* Opacity Button turns on the Opacity Effect */
+  if (rainbowEffect) {
+    rainbowButton.style.backgroundColor = `rgb(${getRandomColor()})`;
+    rainbowButton.style.border = `2px solid rgb(${getRandomColor()})`;
+    rainbowButton.style.color = `rgb(${getRandomColor()})`;
+  } else {
+    rainbowButton.style.backgroundColor = "#1f2933";
+    rainbowButton.style.color = "#d9a441";
+    rainbowButton.style.border = "2px solid #1f2933";
+  }
+});
 
 opacityButton.addEventListener("click", () => {
   opacityEffect = !opacityEffect;
+
+  if (opacityEffect) {
+    opacityButton.style.backgroundColor = "#d9a441";
+    opacityButton.style.color = "#1f2933";
+    opacityButton.style.border = "2px solid #1f2933";
+  } else {
+    opacityButton.style.backgroundColor = "#1f2933";
+    opacityButton.style.color = "#d9a441";
+    opacityButton.style.border = "2px solid #1f2933";
+  }
 });
 
-/* Pen Functions */
+/* Drawing */
+
+/*
+  Decides how each square should be coloured.
+  Rainbow controls the colour.
+  Opacity controls the transparency.
+  Both effects can be active at the same time.
+*/
 
 function drawSquare(square) {
   let color;
   if (rainbowEffect) {
     color = getRandomColor();
   } else {
-    color = "217, 164, 65";
+    color =DEFAULT_COLOUR;
   }
 
   let opacity;
@@ -48,12 +78,12 @@ function drawSquare(square) {
     if (opacity < 1) {
       opacity = Math.min(1, opacity + 0.1);
       square.dataset.opacity = opacity;
-    } 
-  }else {
-      opacity = 1;
     }
-    square.style.backgroundColor = `rgba(${color}, ${opacity})`;
+  } else {
+    opacity = 1;
   }
+  square.style.backgroundColor = `rgba(${color}, ${opacity})`;
+}
 
 /* Grid Functions */
 
@@ -64,6 +94,11 @@ function createGrid(gridHeight, gridWidth) {
 
     gridBlock.style.width = `${100 / gridWidth}%`;
     gridBlock.style.height = `${100 / gridHeight}%`;
+
+    /*
+      Each square stores its own opacity.
+      This lets opacity increase separately for each block.
+    */
 
     gridBlock.dataset.opacity = 0;
 

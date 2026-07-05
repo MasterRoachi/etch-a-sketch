@@ -1,8 +1,19 @@
+/* Global */
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+
+/* Custom Font */
+
+@font-face {
+  font-family: 'Psychoart';
+  src: url('../etch-a-sketch/fonts/PsychoartRegular-jEPJ7.ttf') format('truetype');
+}
+
+/* Page Layout */
 
 body {
   display: flex;
@@ -12,11 +23,6 @@ body {
   background-color: #d9a441;
 }
 
-@font-face {
-  font-family: 'Psychoart';
-  src: url('../etch-a-sketch/fonts/PsychoartRegular-jEPJ7.ttf') format('truetype');
-}
-
 h1 {
   font-size: 100px;
   color: #1f2933;
@@ -24,17 +30,7 @@ h1 {
   padding-top: 15px;
 }
 
-.container {
-  border: 2px solid #1f2933;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  background-color:#1f2933;
-  flex-wrap: wrap;
-  width: min(90vmin, 760px);
-  height: min(90vmin, 760px);
-}
-
+/* Controls */
 
 .button-container {
   display: flex;
@@ -57,3 +53,18 @@ button {
   border-radius: 10px;
 
 }
+
+/* Grid */
+
+.container {
+  border: 2px solid #1f2933;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  background-color:#1f2933;
+  flex-wrap: wrap;
+  width: min(90vmin, 760px);
+  height: min(90vmin, 760px);
+}
+
+
