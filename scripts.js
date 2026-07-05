@@ -1,66 +1,62 @@
 const container = document.querySelector(".container");
 const refreshButton = document.querySelector("#refresh");
+const rainbowButton = document.querySelector("#rainbow");
+const opacityButton = document.querySelector("#opacity");
 
 let rainbowEffect = false;
 let opacityEffect = false;
 
+/* Initial Grid */
+
 createGrid(16, 16);
 
-const squares = document.querySelectorAll(".block");
-squares.forEach((square) => {
-  square.addEventListener("mouseover", () => {
-    square.style.backgroundColor = "#d9a441";
-  });
-});
-
-function rainbowPen() {
-  squares.forEach((square) => {
-    square.addEventListener("mouseover", () =>{
-      square.style.backgroundColor = getRandomColor()
-    })
-  })
-}
-
-function opacityPen() {
-  squares.forEach((square) => {
-    square.dataset.opacity = 0;
-
-    square.addEventListener("mouseover", () => {
-      let opacity = Number(square.dataset.opacity);
-
-      if (opacity < 1) {
-        opacity = Math.min(1, opacity + 0.1);
-        square.dataset.opacity = opacity;
-      }
-      square.style.backgroundColor = `rgba( ${square.dataset.color}, ${opacity})`;
-    });
-  });
-}
-
-
-
-
-/* Rainbow Button turns on the rgb rainbowEffeect */
-
-const rainbowButton = document.querySelector("#rainbow");
-rainbowButton.addEventListener("click", () => {
-  if (rainbowEffect) {
-    !rainbowEffect;
-  } else {
-    rainbowPen();
-  }
-});
+/* Events */
 
 /* Refresh Button clears screen and gets new grid dimensions*/
-
-/* Events */
 
 refreshButton.addEventListener("click", () => {
   clearGrid();
   getGridSize();
 });
 
-/* Functions */
+/* Rainbow Button turns on the rgb Rainbow Effect */
+
+rainbowButton.addEventListener("click", () => {
+  rainbowEffect = !rainbowEffect;
+});
+
+/* Opacity Button turns on the Opacity Effect */
+
+opacityButton.addEventListener("click", () => {
+  opacityEffect = !opacityEffect;
+});
+
+/* Pen Functions */
+
+function drawSquare(square) {
+  let color;
+  if (rainbowEffect) {
+    color = getRandomColor();
+  } else {
+    color = "217, 164, 65";
+  }
+
+  let opacity;
+  if (opacityEffect) {
+    opacity = Number(square.dataset.opacity);
+
+    if (opacity < 1) {
+      opacity = Math.min(1, opacity + 0.1);
+      square.dataset.opacity = opacity;
+    } 
+  }else {
+      opacity = 1;
+    }
+    square.style.backgroundColor = `rgba(${color}, ${opacity})`;
+  }
+
+/* Grid Functions */
+
 function createGrid(gridHeight, gridWidth) {
   for (let i = 1; i <= gridHeight * gridWidth; i++) {
     const gridBlock = document.createElement("div");
@@ -69,15 +65,14 @@ function createGrid(gridHeight, gridWidth) {
     gridBlock.style.width = `${100 / gridWidth}%`;
     gridBlock.style.height = `${100 / gridHeight}%`;
 
+    gridBlock.dataset.opacity = 0;
+
+    gridBlock.addEventListener("mouseover", () => {
+      drawSquare(gridBlock);
+    });
+
     container.appendChild(gridBlock);
   }
-}
-
-function getRandomColor() {
-  const r = Math.floor(Math.random() * 256);
-  const g = Math.floor(Math.random() * 256);
-  const b = Math.floor(Math.random() * 256);
-  return `${r}, ${g}, ${b}`;
 }
 
 function clearGrid() {
@@ -94,3 +89,11 @@ function getGridSize() {
   createGrid(size, size);
 }
 
+/* Utility Functions */
+
+function getRandomColor() {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  return (rgb = `${r}, ${g}, ${b}`);
+}
