@@ -21,6 +21,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #d9a441;
+  user-select: none;
 }
 
 h1 {
@@ -65,6 +66,7 @@ button {
   flex-wrap: wrap;
   width: min(90vmin, 760px);
   height: min(90vmin, 760px);
+  touch-action: none;
 }
 
 

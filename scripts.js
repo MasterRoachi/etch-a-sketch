@@ -9,6 +9,7 @@ const opacityButton = document.querySelector("#opacity");
 
 let rainbowEffect = false;
 let opacityEffect = false;
+let isDrawing = false;
 
 /* Constants */
 
@@ -21,12 +22,26 @@ createGrid(DEFAULT_GRID_SIZE, DEFAULT_GRID_SIZE);
 
 /* Events */
 
+document.addEventListener("pointerup", () => {
+  isDrawing = false;
+});
+
+document.addEventListener("pointercancel", () => {
+  isDrawing = false;
+});
+
+document.addEventListener("pointerleave", () => {
+  isDrawing = false;
+});
+
 refreshButton.addEventListener("click", () => {
+  isDrawing = false;
   clearGrid();
   getGridSize();
 });
 
 rainbowButton.addEventListener("click", () => {
+  isDrawing = false;
   rainbowEffect = !rainbowEffect;
 
   if (rainbowEffect) {
@@ -41,6 +56,7 @@ rainbowButton.addEventListener("click", () => {
 });
 
 opacityButton.addEventListener("click", () => {
+  isDrawing = false;
   opacityEffect = !opacityEffect;
 
   if (opacityEffect) {
@@ -68,7 +84,7 @@ function drawSquare(square) {
   if (rainbowEffect) {
     color = getRandomColor();
   } else {
-    color =DEFAULT_COLOUR;
+    color = DEFAULT_COLOUR;
   }
 
   let opacity;
@@ -102,8 +118,15 @@ function createGrid(gridHeight, gridWidth) {
 
     gridBlock.dataset.opacity = 0;
 
-    gridBlock.addEventListener("mouseover", () => {
+    gridBlock.addEventListener("pointerdown", () => {
+      isDrawing = true;
       drawSquare(gridBlock);
+    });
+
+    gridBlock.addEventListener("pointerenter", () => {
+      if (isDrawing) {
+        drawSquare(gridBlock);
+      }
     });
 
     container.appendChild(gridBlock);
@@ -130,5 +153,5 @@ function getRandomColor() {
   const r = Math.floor(Math.random() * 256);
   const g = Math.floor(Math.random() * 256);
   const b = Math.floor(Math.random() * 256);
-  return (rgb = `${r}, ${g}, ${b}`);
+  return `${r}, ${g}, ${b}`;
 }
