@@ -51,3 +51,8 @@ function getRandomColor() {
   const b = Math.floor(Math.random() * 256);
   return `${r}, ${g}, ${b}`;
 }
+
+const rainbowButton = document.querySelector("#rainbow");
+rainbowButton.addEventListener('click',() => {
+  
+})
